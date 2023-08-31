@@ -48,7 +48,7 @@ const verifyOtp = async (req, res) => {
 
       if (existingUser) {
         const token = jwt.sign(
-          { user_id: existingUser._id, phone_no: existingUser.phone_no },
+          { user_id: existingUser._id },
           process.env.SECRET_KEY,
           { expiresIn: "24h" }
         );
