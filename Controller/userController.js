@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const User = require("../Schema/userSchema");
 const Otp = require("../Schema/otpSchema");
+const Restaurant = require("../Schema/restaurantSchema");
+const restoSaveUnsave = require("../Schema/restoSave-unsave");
 const twilio = require("twilio");
 const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 
@@ -102,8 +104,40 @@ const CreateUser = async (req, res) => {
     return res.status(500).json({ message: "An error occurred" });
   }
 };
+
+const SaveRestaurant = async (req, res) => {
+  try {
+    const datafind = await restoSaveUnsave.find({
+      restaurant_id: req.query.restaurant_id,
+      user_id: req.user.user_id,
+    });
+    if (datafind.length == 0) {
+      const newSave = new restoSaveUnsave({
+        user_id: req.user.user_id,
+        restaurant_id: req.query.restaurant_id,
+      });
+      const result = await newSave.save();
+      res.status(200).json({
+        message: "Restaurant saved successfully",
+        data: result,
+      });
+    } else {
+      const Unsave = await restoSaveUnsave.deleteOne({
+        restaurant_id: datafind[0].restaurant_id,
+        user_id: datafind[0].user_id,
+      });
+      res.status(200).json({
+        message: "Restaurant unsaved successfully",
+        data: Unsave,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
 module.exports = {
   Signin,
   verifyOtp,
   CreateUser,
+  SaveRestaurant,
 };

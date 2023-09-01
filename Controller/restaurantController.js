@@ -5,6 +5,8 @@ const CreateRestaurant = async (req, res) => {
     const restaurant = new Restaurant({
       ...req.body,
       image: req.file.filename,
+      user_id: req.user.user_id,
+      reviews: req.user.user_id,
     });
     const savedetail = await restaurant.save();
     res.status(201).json({ savedetail });

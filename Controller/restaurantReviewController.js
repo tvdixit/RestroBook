@@ -2,11 +2,12 @@ const Review = require("../Schema/RestaurantreviewSchema");
 const RestaurantReview = async (req, res) => {
   try {
     const review = new Review({
-      user_id: req.user.user_id,
+      rating_by: req.user.user_id,
       ...req.body,
     });
-    await review.save();
-    res.status(200).json({ review });
+
+    const savedetail = await review.save();
+    res.status(200).json({ savedetail });
   } catch (err) {
     res.status(400).json(err);
   }
