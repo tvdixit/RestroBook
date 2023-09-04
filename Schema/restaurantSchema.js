@@ -14,6 +14,7 @@ const RestaurantSchema = new mongoose.Schema({
     phone: { type: String },
     email: { type: String },
   },
+  is_veg: { type: Boolean, default: true, enum: [true, false] },
   cuisine: [{ type: String }],
   opening_hours: {
     monday: { type: String },
@@ -27,7 +28,7 @@ const RestaurantSchema = new mongoose.Schema({
   user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   menu: [
     {
-      category: { type: String },
+      category: { type: String, enum: ["veg", " non_veg"] },
       dishes: [
         {
           name: { type: String },
@@ -43,10 +44,12 @@ const RestaurantSchema = new mongoose.Schema({
       ref: "Review",
     },
   ],
-  discountForYou: { type: Number, default: 0 },
+  averagerating: { type: Number, default: 0 },
+  discountForYou: { type: String, default: 0 },
   about: {
     type: String,
   },
+  saved_by: { type: mongoose.Schema.Types.ObjectId, ref: "SaveUnsaved" },
 });
 
 module.exports = mongoose.model("Restaurant", RestaurantSchema);

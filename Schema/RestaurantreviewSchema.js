@@ -23,10 +23,6 @@ const RestaurantReview = new mongoose.Schema(
       },
     },
     comment: { type: String },
-    date: {
-      type: Date,
-      default: Date.now,
-    },
   },
   { timestamps: true }
 );

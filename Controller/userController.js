@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../Schema/userSchema");
 const Otp = require("../Schema/otpSchema");
 const Restaurant = require("../Schema/restaurantSchema");
-const restoSaveUnsave = require("../Schema/restoSave-unsave");
+const restoSaveUnsave = require("../Schema/restoSave-unsaveSchema");
+const inquiryForm = require("../Schema/inquiryFormSchema");
 const twilio = require("twilio");
 const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 
@@ -117,6 +118,11 @@ const SaveRestaurant = async (req, res) => {
         restaurant_id: req.query.restaurant_id,
       });
       const result = await newSave.save();
+      await Restaurant.findByIdAndUpdate(
+        req.query.restaurant_id,
+        { $push: { saved_by: result._id } },
+        { new: true }
+      );
       res.status(200).json({
         message: "Restaurant saved successfully",
         data: result,
@@ -126,6 +132,11 @@ const SaveRestaurant = async (req, res) => {
         restaurant_id: datafind[0].restaurant_id,
         user_id: datafind[0].user_id,
       });
+      await Restaurant.findByIdAndUpdate(
+        req.query.restaurant_id,
+        { $pull: { saved_by: datafind[0]._id } },
+        { new: true }
+      );
       res.status(200).json({
         message: "Restaurant unsaved successfully",
         data: Unsave,
@@ -135,9 +146,27 @@ const SaveRestaurant = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+const inquiry = async (req, res) => {
+  console.log(req.body, "Loading...");
+  try {
+    const newInquiry = new inquiryForm({
+      restaurant_id: req.body.restaurant_id,
+      user_id: req.user.user_id,
+      ...req.body,
+    });
+    console.log(newInquiry, "Inquiry", req.body);
+    const result = await newInquiry.save();
+    res.status(200).json({ message: "Inquiry sent successfully", result });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "An error occurred" });
+  }
+};
 module.exports = {
   Signin,
   verifyOtp,
   CreateUser,
   SaveRestaurant,
+  inquiry,
 };

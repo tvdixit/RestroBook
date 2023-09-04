@@ -5,6 +5,7 @@ const {
   verifyOtp,
   CreateUser,
   SaveRestaurant,
+  inquiry,
 } = require("../Controller/userController");
 const validate = require("../Middleware/validate");
 const {
@@ -18,7 +19,8 @@ router
   .post("/signin", validate(SigninValidation), Signin)
   .post("/verifyotp", validate(verifyOtpValidation), verifyOtp)
   .post("/createuser", validate(CreateUserValidation), CreateUser)
-  .post("/save/restaurant", auth(), SaveRestaurant);
+  .post("/save/restaurant", auth(), SaveRestaurant)
+  .post("/inquiryform", auth(), inquiry);
 module.exports = {
   route: router,
 };
