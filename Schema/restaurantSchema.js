@@ -2,21 +2,21 @@ const mongoose = require("mongoose");
 
 //Create Restaurant Model Schema :
 const RestaurantSchema = new mongoose.Schema({
-  name: { type: String },
-  description: { type: String },
-  image: { type: String },
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  image: { type: String, required: true },
   address: {
-    street: { type: String },
-    city: { type: String },
-    state: { type: String },
-    postal_code: { type: String },
+    street: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    postal_code: { type: String, required: true },
   },
   contact: {
-    phone: { type: String },
-    email: { type: String },
+    phone: { type: String, required: true },
+    email: { type: String, required: true },
   },
-  is_veg: { type: Boolean, default: true, enum: [true, false] },
-  cuisine: [{ type: String }],
+  is_veg: { type: Boolean, default: true, enum: [true, false], required: true },
+  cuisine: [{ type: String, required: true }],
   opening_hours: {
     monday: { type: String },
     tuesday: { type: String },
@@ -32,9 +32,9 @@ const RestaurantSchema = new mongoose.Schema({
       category: { type: String, enum: ["veg", " non_veg"] },
       dishes: [
         {
-          name: { type: String },
-          description: { type: String },
-          price: { type: Number },
+          name: { type: String, required: true },
+          description: { type: String, required: true },
+          price: { type: Number, required: true, min: 0 },
         },
       ],
     },
