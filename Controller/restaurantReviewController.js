@@ -27,6 +27,16 @@ const calculateAverageRating = async (restaurantId) => {
 //RestaurantReview
 const RestaurantReview = async (req, res) => {
   try {
+    const existingReview = await Review.findOne({
+      rating_by: req.user.user_id,
+      restaurant_id: req.body.restaurant_id,
+    });
+
+    if (existingReview) {
+      return res
+        .status(400)
+        .json({ error: "You have already reviewed this restaurant" });
+    }
     const review = new Review({
       rating_by: req.user.user_id,
       ...req.body,

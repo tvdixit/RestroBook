@@ -51,6 +51,10 @@ const RestaurantSchema = new mongoose.Schema({
     type: String,
   },
   saved_by: [{ type: mongoose.Schema.Types.ObjectId, ref: "SaveUnsaved" }],
+  isTrending: { type: Boolean, default: false, required: true },
+  happyHoursAvailable: { type: Boolean, default: false, required: true },
+  openingDate: { type: Date },
+  outdoorDiningAvailable: { type: Boolean, default: false, required: true },
 });
 
 module.exports = mongoose.model("Restaurant", RestaurantSchema);

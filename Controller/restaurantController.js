@@ -44,7 +44,64 @@ const RestaurantPagination = async (req, res) => {
   }
 };
 
+//Restaurant Sorting Api :
+const RestaurantSorting = async (req, res) => {
+  try {
+    let sorting = {};
+
+    if (req.query.sortby === "rating-high-to-low") {
+      sorting = { averagerating: -1 };
+    } else if (req.query.sortby === "price-high-to-low") {
+      sorting = { "menu.dishes.price": -1 };
+    } else if (req.query.sortby === "price-low-to-high") {
+      sorting = { "menu.dishes.price": 1 };
+    } else {
+      sorting = { averagerating: -1 };
+    }
+
+    const restaurants = await Restaurant.find().sort(sorting);
+    res.json(restaurants);
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
+
+// Restaurant get by Category Api:
+const RestaurantsbyCategory = async (req, res) => {
+  try {
+    const query = {};
+
+    if (req.query.trending === "true") {
+      query.isTrending = true;
+    }
+
+    if (req.query.happyHours === "true") {
+      query.happyHoursAvailable = true;
+    }
+
+    if (req.query.newOpen) {
+      if (req.query.newOpen === "false") {
+        const allRestaurants = await Restaurant.find();
+        return res.status(200).json(allRestaurants);
+      } else {
+        query.openingDate = { $gte: new Date(req.query.newOpen) };
+      }
+    }
+
+    if (req.query.outdoorDining === "true") {
+      query.outdoorDiningAvailable = true;
+    }
+
+    const filteredRestaurants = await Restaurant.find(query);
+    res.status(200).json(filteredRestaurants);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   CreateRestaurant,
   RestaurantPagination,
+  RestaurantSorting,
+  RestaurantsbyCategory,
 };
