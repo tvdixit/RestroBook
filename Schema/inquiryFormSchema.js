@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// InquiryForm Model Schema :
 const inquirySchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,

@@ -1,6 +1,7 @@
 const Review = require("../Schema/RestaurantreviewSchema");
 const Restaurant = require("../Schema/restaurantSchema");
 
+//Calculate AverageRating:
 const calculateAverageRating = async (restaurantId) => {
   try {
     const reviews = await Review.find({ restaurant_id: restaurantId });
@@ -23,6 +24,7 @@ const calculateAverageRating = async (restaurantId) => {
   }
 };
 
+//RestaurantReview
 const RestaurantReview = async (req, res) => {
   try {
     const review = new Review({
@@ -36,7 +38,7 @@ const RestaurantReview = async (req, res) => {
 
     if (!restaurant) {
       restaurant = new Restaurant({
-        ...req.body.restaurantData,
+        ...req.body,
         reviews: [savedReview._id],
       });
       await restaurant.save();

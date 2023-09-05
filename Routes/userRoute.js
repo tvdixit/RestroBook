@@ -21,6 +21,7 @@ router
   .post("/createuser", validate(CreateUserValidation), CreateUser)
   .post("/save/restaurant", auth(), SaveRestaurant)
   .post("/inquiryform", auth(), inquiry);
+
 module.exports = {
   route: router,
 };

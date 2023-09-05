@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 
+//Auth Api For Decode Jwt Token :
 const auth = () => async (req, res, next) => {
   const headerToken = req.headers.authorization;
   if (!headerToken) {

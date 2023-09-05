@@ -37,6 +37,7 @@ const Signin = async (req, res, next) => {
     res.status(500).json({ message: "An error occurred" });
   }
 };
+
 //verifyOtp Api:
 const verifyOtp = async (req, res) => {
   try {
@@ -73,6 +74,7 @@ const verifyOtp = async (req, res) => {
     return res.status(500).json({ message: "An error occurred" });
   }
 };
+
 //Create User Api :
 const CreateUser = async (req, res) => {
   try {
@@ -106,6 +108,7 @@ const CreateUser = async (req, res) => {
   }
 };
 
+//SavRestaurant Api:
 const SaveRestaurant = async (req, res) => {
   try {
     const datafind = await restoSaveUnsave.find({
@@ -147,6 +150,7 @@ const SaveRestaurant = async (req, res) => {
   }
 };
 
+//Inquiry Form Api :
 const inquiry = async (req, res) => {
   console.log(req.body, "Loading...");
   try {
@@ -163,6 +167,7 @@ const inquiry = async (req, res) => {
     res.status(500).json({ message: "An error occurred" });
   }
 };
+
 module.exports = {
   Signin,
   verifyOtp,

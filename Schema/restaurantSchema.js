@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+//Create Restaurant Model Schema :
 const RestaurantSchema = new mongoose.Schema({
   name: { type: String },
   description: { type: String },
@@ -49,7 +50,7 @@ const RestaurantSchema = new mongoose.Schema({
   about: {
     type: String,
   },
-  saved_by: { type: mongoose.Schema.Types.ObjectId, ref: "SaveUnsaved" },
+  saved_by: [{ type: mongoose.Schema.Types.ObjectId, ref: "SaveUnsaved" }],
 });
 
 module.exports = mongoose.model("Restaurant", RestaurantSchema);

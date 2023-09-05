@@ -8,15 +8,17 @@ const {
 } = require("../Controller/restaurantController");
 const { RestaurantValidation } = require("../Validation/restaurantValidation");
 const { upload } = require("../Service/upload");
+
 router
   .post(
     "/createrestaurant",
-    validate(RestaurantValidation),
+    validate({ body: RestaurantValidation.formdata }),
     upload.single("image"),
     auth(),
     CreateRestaurant
   )
   .get("/pagination", RestaurantPagination);
+
 module.exports = {
   route: router,
 };

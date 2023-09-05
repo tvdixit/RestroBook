@@ -1,6 +1,6 @@
-const Joi = require("joi");
 const { Schema, model } = require("mongoose");
 
+//Otp Model Schema :
 const otpSchema = new Schema(
   {
     phone_no: {

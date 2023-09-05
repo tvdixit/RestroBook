@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+//Restaurant Review Model Schema :
 const RestaurantReview = new mongoose.Schema(
   {
     restaurant_id: {

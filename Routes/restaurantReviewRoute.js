@@ -7,4 +7,6 @@ const {
 
 router.post("/addReview", auth(), RestaurantReview);
 
-module.exports = { route: router };
+module.exports = {
+  route: router,
+};
