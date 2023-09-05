@@ -5,7 +5,7 @@ const {
   RestaurantReview,
 } = require("../Controller/restaurantReviewController");
 
-router.post("/addReview", auth(), RestaurantReview);
+router.post("/addReview", auth(), RestaurantReview); // addReview or rating api :
 
 module.exports = {
   route: router,

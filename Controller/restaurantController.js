@@ -1,5 +1,6 @@
 const Restaurant = require("../Schema/restaurantSchema");
 
+//Create Restaurant Api :
 const CreateRestaurant = async (req, res) => {
   try {
     const restaurant = new Restaurant({
@@ -14,7 +15,7 @@ const CreateRestaurant = async (req, res) => {
   }
 };
 
-//Restaurant Pagination :
+//Restaurant Pagination Api :
 const RestaurantPagination = async (req, res) => {
   const { page = 1, limit = 10, name, is_veg, city } = req.query;
   const query = {};
